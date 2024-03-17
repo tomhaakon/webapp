@@ -2,11 +2,14 @@
     "devDependencies": {
         "@babel/core": "^7.17.0",
         "@babel/preset-env": "^7.16.0",
+        "@popperjs/core": "^2.11.8",
         "@symfony/webpack-encore": "^4.6.1",
+        "bootstrap": "^5.3.3",
         "browser-sync": "^2.29.3",
         "browser-sync-webpack-plugin": "^2.3.0",
         "core-js": "^3.23.0",
         "dotenv": "^16.4.5",
+        "jquery": "^3.7.1",
         "regenerator-runtime": "^0.13.9",
         "webpack": "^5.74.0",
         "webpack-cli": "^4.10.0",
@@ -19,5 +22,8 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "croppie": "^2.6.5"
     }
 }
