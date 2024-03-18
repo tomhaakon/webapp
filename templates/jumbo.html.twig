@@ -1,9 +1,20 @@
-{% extends 'home/index.html.twig' %}
 {% block content %}
-<main role="main" class="container">
-  <div class="jumbotron">
-    <h1>Croppie js</h1>
-    <img class="test" src="{{ asset('demo.jpg') }}" />
-  </div>
-</main>
+	<main role="main" class="container">
+		<div class="jumbatron">
+
+			<h1>Croppie js</h1>
+
+		</div>
+
+			<div>
+                <h2>Select file</h2>
+                <input type="file" id="inputFile" accept="image/png, image/jpeg">
+            </div>
+
+            <div id="actions" style="display: none;">
+                <button id="cropBtn" type="button">Crop Image</button>
+			</div>
+            
+            <div id="croppieMount" class=""></div>
+	</main>
 {% endblock content %}

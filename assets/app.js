@@ -13,6 +13,8 @@ import './styles/navbar-top.css';
 import './styles/croppie.css';
 //import './croppie.js';
 
+console.log("app.js loaded");
+
 const $ = require('jquery');
 
 global.$ = global.jQuery = $;
