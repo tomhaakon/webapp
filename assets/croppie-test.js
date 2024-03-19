@@ -1,32 +1,13 @@
 import Croppie from 'croppie';
 
-let upload = {
-    data: {
-        name: null,
-        url: null,
-        type: null,
-        size: null,
-        height: null,
-        width: null
-    }
-};
+import Config from './Config.js';
+import BoxControl from './BoxControl';
+import ShowImageInfo from './ShowImageInfo.js';
+import HandleCrop from './HandleCrop';
+import { ChangeViewPort } from './ChangeViewPort.js';
 
-let croppieOptions = {
-    url: upload.data.url,
-    viewport: { 
-        width: 200, 
-        height: 200,
-        //type: 'circle'
-    },
-    boundary: { 
-        width: 100, 
-        height: 100
-    },
-    // enableresize: true,
-    mousewheelzoom: false,
-    // enableorientation: true,
-    // mousewheelzoom: 'ctrl'
-};
+const config = new Config;
+const handleCrop = new HandleCrop();
 
 document.addEventListener("DOMContentLoaded", function() {
     console.log(`%c croppie-test.js loaded.`, 'color: #bada55');
@@ -50,76 +31,63 @@ document.addEventListener("DOMContentLoaded", function() {
             const file = inputFile.files[0];
             const reader = new FileReader();
                 
-            console.warn(`selected file:`, file); 
-            
-            //first populate of upload object
-            upload.data  = {
-                name: file.name,
-                type: file.type,
-                size: file.size
-            };
-
             reader.onloadend = async function(event) {
                 let dimensions; 
 
-                //get image height and width
                 try {
 
                     dimensions = await getImageHeightAndWidth(event.target.result);
-                    upload.data.width = dimensions.width;
-                    upload.data.height = dimensions.height;
 
+                    config.upload.data  = {
+                        name: file.name,
+                        type: file.type,
+                        size: file.size,
+                        width: dimensions.width,
+                        height: dimensions.height,
+                        url: event.target.result,
+                    };
+
+                    if(config.upload.data.width < 200) {
+                        //minimums bildeformat
+                        console.log("lite bilde");
+                    }
+
+                    
                 } catch (error) {
                     console.log(error);
                 }
 
-                //populate the upload object
-                upload.data.url  = event.target.result;
+                //config.croppieOptions.viewport.width = 500;
+                //
+                //const changeViewPort = new ChangeViewPort(config.croppieOptions.viewport);
+                const viewport = config.croppieOptions.viewport;
+                const changeViewPort = new ChangeViewPort(viewport);
+                
+                //changeViewPort.toSmall();
+                //changeViewPort.toMedium();
+                changeViewPort.toLarge(); 
 
-                croppie = new Croppie(croppieMount, croppieOptions);
-                croppie.bind(upload.data.url);
+                config.croppieOptions.viewport = {
+                    width: changeViewPort.width,
+                    height: changeViewPort.height
+                };
 
-                //show actions after reader has loaded
+                croppie = new Croppie(croppieMount, config.croppieOptions);
+
+                croppie.bind(config.upload.data.url);
                 actions.style.display = '';
+                
+                new ShowImageInfo(config.upload);
 
-                // for debug info 
-                document.getElementById('fileInfo').innerHTML =
-                "uploaded file: " + upload.data.name + "<br>" +
-                "uploaded file type: " + upload.data.type + "<br>" +
-                "uploaded file size: " + upload.data.size + " kB<br>" + 
-                "uploaded file width: " + upload.data.width + "<br>" +
-                "uploaded file height: " + upload.data.height + "<br>";
             }
-
 
             reader.readAsDataURL(file);
             
         });
-
-            //the crop action
-            cropBtn.addEventListener('click', () => {
-
-                croppie.result({
-                    type: 'base64',
-                    // circle: true,
-                    format: 'jepg',
-                    size: 'viewport'
-                }).then((imageResult) => {
-
-                    let formData = new FormData();
-                    formData.append('base64_img', imageResult);
-                    //
-                    //fetch('upload_cropped.php', {
-                    //method: 'POST',
-                    //body: formData
-                    //}).then(response => response.json()).then((data) => {
-                    //console.log(data);
-                    //});
-                });
-            });
-    
-//end of DOMContentLoaded
-});
+        cropBtn.addEventListener('click', () => {
+            handleCrop.previewCroppedImage(croppie);
+        });
+}); //end of DOMContentLoaded
 
 const getImageHeightAndWidth = async (src) => {
     return new Promise((resolve, reject) => {

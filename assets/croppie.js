@@ -4,7 +4,7 @@ Croppie
  * Foliotek
  * Version: 2.6.5
  *************************/
-console.log("croppie.js loaded");
+console.log("%c croppie.js loaded", "color: #bada55");
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.

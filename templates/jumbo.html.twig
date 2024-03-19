@@ -1,11 +1,11 @@
 {% block content %}
 	<main role="main" class="container">
-		<div class="jumbatron">
+		<div>
 			<h1>Croppie js</h1>
 		</div>
 
 			<div>
-                <h2>Select file</h2>
+                <h3>Select file</h3>
                 <input type="file" id="inputFile" accept="image/png, image/jpeg">
             </div>
 
@@ -15,5 +15,6 @@
             
             <div id="croppieMount" class=""></div>
             <div id="fileInfo"></div>
-	</main>
+            <div image-cropped></div>
+    </main>
 {% endblock content %}
