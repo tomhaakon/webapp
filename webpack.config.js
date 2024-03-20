@@ -23,8 +23,8 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
-    .addEntry('croppie', './assets/croppie.js')
-    .addEntry('croppie-test', './assets/croppie-test.js')
+//    .addEntry('croppie', './assets/croppie.js')
+//    .addEntry('croppie-test', './assets/croppie-test.js')
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 

@@ -1,20 +1,36 @@
-{% block content %}
-	<main role="main" class="container">
-		<div>
-			<h1>Croppie js</h1>
-		</div>
+<main role="main" class="container">
+    <div>
+        <h1>Croppie js</h1>
+    </div>
 
-			<div>
-                <h3>Select file</h3>
-                <input type="file" id="inputFile" accept="image/png, image/jpeg">
+        <div>
+            <input type="file" id="inputFile" accept="image/png, image/jpeg, image/webp">
+
+        </div>
+
+        <div id="actions" style="display: none;">
+            <div data-crop-buttons>
+
+                <button class="btn btn-primary"
+                    data-crop="small">100x100
+                </button>
+
+                <button class="btn btn-primary"
+                    data-crop="medium">400x400
+                </button>
+
+                <button class="btn btn-primary"
+                    data-crop="large">800x800
+                </button>
+
+                <button class="btn btn-warning"
+                    data-crop="execute">Crop Image
+                </button>
+
             </div>
-
-            <div id="actions" style="display: none;">
-                <button id="cropBtn" type="button">Crop Image</button>
-			</div>
-            
-            <div id="croppieMount" class=""></div>
-            <div id="fileInfo"></div>
-            <div image-cropped></div>
-    </main>
-{% endblock content %}
+        </div>
+        
+        <div id="croppieMount" class=""></div>
+        <div id="fileInfo"></div>
+        <img image-cropped />
+</main>

@@ -1,6 +1,6 @@
 console.log("%c BoxControl.js loaded.", "color: #bada55");
 
-export default class BoxControl {
+export class BoxControl {
     constructor() {
     }
 

@@ -1,6 +1,6 @@
 console.log("%c config.js loaded", "color: #bada55");
 
-export default class Config {
+export class Config {
 
     constructor() {
         

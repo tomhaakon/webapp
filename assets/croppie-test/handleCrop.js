@@ -1,6 +1,6 @@
-console.log("%c HandleCrop.js", "color: #bada55");
+console.log("%c handleCrop.js", "color: #bada55");
 
-export default class HandleCrop {
+export class HandleCrop {
     constructor() {
     }
 
@@ -8,7 +8,7 @@ export default class HandleCrop {
         //the crop action
             console.log("crop image");
                 croppie.result({
-                type: 'base64',
+                type: 'rawcanvas',
                 // circle: true,
                 format: 'jepg',
                 size: 'viewport'
@@ -31,13 +31,13 @@ export default class HandleCrop {
     previewCroppedImage(croppie) {
         try {
             croppie.result({
-                type: 'html',
-                format: 'webp',
+                type: 'rawcanvas',
+                //format: 'webp',
                 size: 'viewport'
             }).then(function(html) {
                 console.log(html);
                 const element = document.querySelector("[image-cropped]");
-                element.append(html);
+                //                element.append(html);
             });
         }
         catch(error) {

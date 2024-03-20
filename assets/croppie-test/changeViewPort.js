@@ -1,4 +1,4 @@
-console.log("%c ChangeViewPort.js loaded", "color: #bada55");
+console.log("%c changeViewPort.js loaded", "color: #bada55");
 
 
 export class ChangeViewPort {

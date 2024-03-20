@@ -8,18 +8,21 @@
 // 
 // any CSS you import will output into a single css file (app.css in this case)
 
+// css import
 import './styles/app.css';
 import './styles/navbar-top.css';
 import './styles/croppie.css';
-//import './croppie.js';
 
-console.log("app.js loaded");
-
-const $ = require('jquery');
-
-global.$ = global.jQuery = $;
+// javascript import
 
 require('bootstrap');
+
+
+require ('./croppie');
+//import 'croppie-test';
+require('./croppie-test/croppie-test');
+
+
 
 $(document).ready(function() {
         $('[data-toggle="popover"]').popover();

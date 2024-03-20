@@ -1,0 +1,76 @@
+
+import { Config } from './config.js';
+import { HandleCrop } from './handleCrop';
+import { ChangeViewPort } from './changeViewPort.js';
+import { GetImgInfo } from './getImgInfo.js';
+import { CroppieManager } from './croppie-manager.js';
+
+//import BoxControl from './boxControl';
+import showImageInfo from './showImageInfo.js';
+
+const config = new Config();
+const handleCrop = new HandleCrop();
+
+const viewport = config.croppieOptions.viewport;
+const changeViewPort = new ChangeViewPort(viewport);
+
+const croppieManager = new CroppieManager('croppieMount');
+
+document.addEventListener("DOMContentLoaded", function() {
+    console.log(`%c croppie-test.js loaded.`, 'color: #bada55');
+
+        inputFile.addEventListener('change', () => {
+            const file = inputFile.files[0];
+            const reader = new FileReader();
+                
+            if(!file) return;
+
+            reader.onloadend = function(event) {
+                const result = event.target.result; 
+
+                croppieManager.createInstance(200, 200); 
+                croppieManager.bindImage(result);
+
+                actions.style.display = '';
+                listenForChange(result);
+            }
+                reader.readAsDataURL(file);
+        });
+
+}); //end of DOMContentLoaded
+
+function listenForChange(img) {
+    
+    const dataCropButtons = document.querySelector("[data-crop-buttons]");
+
+    const cropSmall = dataCropButtons.querySelector('[data-crop="small"]');
+    const cropMedium = dataCropButtons.querySelector('[data-crop="medium"]');
+    const cropLarge = dataCropButtons.querySelector('[data-crop="large"]');
+    
+    cropLarge.addEventListener('click', () => {
+        console.log("large button clicked");
+        croppieManager.creatInstance(800, 800);
+        croppieManager.bindImage(img);
+    });
+    cropMedium.addEventListener('click', () => {
+        console.log("medium button cliked");
+        croppieManager.bindImage(img);
+        croppieManager.createInstance(400, 400); 
+    });
+    cropSmall.addEventListener('click', () => {
+        console.log("small button clicked"); 
+        croppieManager.bindImage(img);
+        croppieManager.createInstance(200, 200);
+    });
+
+}
+async function displayCroppedImage() {
+    const blob = await croppieManager.getResult();
+    if(blob) {
+        console.log(blob);
+        const imageUrl = URL.createObjectURL(blob);
+        console.log(imageUrl);
+        const img = document.querySelector('[image-cropped]').src = imageUrl;
+console.log(img);
+    }
+}
