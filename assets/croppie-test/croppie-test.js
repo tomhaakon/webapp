@@ -22,13 +22,18 @@ document.addEventListener("DOMContentLoaded", function() {
             if(!file) return;
 
             reader.onloadend = async (event) => {
-
-                const imageInfo = new ImageInfo(file); 
-                imageInfo.show();
+                const result = event.target.result;
 
                 await croppieManager.initCroppie(400,400,400,400);
                 
-                croppieManager.bindImage(event.target.result);
+
+                croppieManager.bindImage(result);
+
+                const imageInfo = new ImageInfo(
+                    file, 
+                    croppieManager.readPorportions(result)); 
+
+                imageInfo.show();
 
                 actions.style.display = '';
                 listenForChange();
@@ -39,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const cropAction = dataCropButtons.querySelector('[data-crop="execute"]');
     cropAction.addEventListener('click', () => {
         console.log("crop image");
-        //handleCrop();
     });
 }); //end of DOMContentLoaded
 

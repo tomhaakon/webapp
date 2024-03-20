@@ -60,10 +60,21 @@ export class CroppieManager {
     async bindImage(imageUrl) {
         this.lastImageUrl = imageUrl;
         if(this.croppieInstance) {
+
             await this.croppieInstance.bind({
                 url: imageUrl
             });
         }
+    }
+
+    async readPorportions(imageUrl) {
+        const image =  new Image();
+        image.src = await imageUrl;
+        
+        return {
+            width: image.width,
+            height: image.height
+        } 
     }
 }
             
