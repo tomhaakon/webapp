@@ -20,7 +20,7 @@ require('bootstrap');
 
 require ('./croppie');
 //import 'croppie-test';
-require('./croppie-test/croppie-test');
+require('./kocropper/main.js');
 
 
 

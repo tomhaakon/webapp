@@ -23,7 +23,9 @@ export class CroppieManager {
         }
 
         this.destroyInstance();
+
         const element = document.getElementById(this.elementId);
+        
         this.croppieInstance = new Croppie(element, {
             viewport: {
                 width: viewportWidth,
@@ -34,7 +36,9 @@ export class CroppieManager {
                 width: boundaryWidth, 
                 height: boundaryHeight 
             },
+            enforceBoundary: false,
         });
+
         if(this.lastImageUrl) {
             await this.croppieInstance.bind({
                 url: this.lastImageUrl,
@@ -54,9 +58,11 @@ export class CroppieManager {
     changeViewportSize(newWidth, newHeight, viewBoundaryWidth, viewBoundaryHeight) {
         if(this.croppieInstance) {
             this.initCroppie(newWidth, newHeight, viewBoundaryHeight, viewBoundaryHeight).then(() => {
+            console.log("changeViewPortSize() instance exists"); 
             });
         }
     }
+
     async bindImage(imageUrl) {
         this.lastImageUrl = imageUrl;
         if(this.croppieInstance) {

@@ -8,12 +8,12 @@ export class ImageInfo {
         this.data = {
             name: this.inputFile.name,
             size: this.inputFile.size,
-            type: this.inputFile.type,
-            width: this.porportions.width,
             height: this.porportions.height,
+            width: this.porportions.width,
+            type: this.inputFile.type,
         }
     }
-    show() {
-        console.log(this.data);
+    data() {
+        return this.data;        
     }
 }

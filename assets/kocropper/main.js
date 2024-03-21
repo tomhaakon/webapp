@@ -1,9 +1,6 @@
 import { Config } from './config.js';
 import { HandleCrop } from './handleCrop';
-import { GetImgInfo } from './getImgInfo.js';
 import { CroppieManager } from './croppie-manager.js';
-
-//import BoxControl from './boxControl';
 import { ImageInfo } from './showImageInfo.js';
 
 const config = new Config();
@@ -11,6 +8,7 @@ const handleCrop = new HandleCrop();
 const croppieManager = new CroppieManager('croppieMount');
 
 const dataCropButtons = document.querySelector("[data-crop-buttons]");
+const imageDataContainer = document.querySelector("[data-file-info]");
 
 document.addEventListener("DOMContentLoaded", function() {
     console.log(`%c croppie-test.js loaded.`, 'color: #bada55');
@@ -23,18 +21,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
             reader.onloadend = async (event) => {
                 const result = event.target.result;
-
+				console.log(result);
                 await croppieManager.initCroppie(400,400,400,400);
+
+                await croppieManager.bindImage(result);
                 
+                const porportions = await croppieManager.readPorportions(result);
 
-                croppieManager.bindImage(result);
+                const imageInfo = new ImageInfo(file, porportions); 
 
-                const imageInfo = new ImageInfo(
-                    file, 
-                    croppieManager.readPorportions(result)); 
+                const dataStore = Object.entries(imageInfo.data);
 
-                imageInfo.show();
+                imageDataContainer.innerHTML = ''; 
+                imageDataContainer.innerHTML += `<b>Original image</b>`;
 
+                for (const [key, value] of dataStore) {
+                    imageDataContainer.innerHTML += `
+                     <div>${key}: ${value}</div>   
+                    `;
+               }
                 actions.style.display = '';
                 listenForChange();
             }
@@ -44,7 +49,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const cropAction = dataCropButtons.querySelector('[data-crop="execute"]');
     cropAction.addEventListener('click', () => {
         console.log("crop image");
+        handleCrop.generateImage(croppieManager.croppieInstance);
     });
+
+
 }); //end of DOMContentLoaded
 
 function listenForChange() {

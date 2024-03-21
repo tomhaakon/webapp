@@ -30,7 +30,7 @@ export class Config {
             enableOrientation: false,   //default false
             enableResize: false,        //default false
             enableZoom: true,           //default true
-            enforceBoundary: true,      //default true
+            enforceBoundary: false,      //default true
             mouseWheelZoom: true,      //defualt true
             customClass: '',            //default ''
             showZoomer: true,           //default true
